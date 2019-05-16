@@ -1,0 +1,933 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.8 (Ubuntu 10.8-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.8 (Ubuntu 10.8-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: accounts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.accounts (
+    id integer NOT NULL,
+    account character(20),
+    password character(20)
+);
+
+
+ALTER TABLE public.accounts OWNER TO postgres;
+
+--
+-- Name: accounts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.accounts_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.accounts_id_seq OWNER TO postgres;
+
+--
+-- Name: accounts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.accounts_id_seq OWNED BY public.accounts.id;
+
+
+--
+-- Name: brands; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.brands (
+    id integer NOT NULL,
+    name character(30),
+    nation character(50)
+);
+
+
+ALTER TABLE public.brands OWNER TO postgres;
+
+--
+-- Name: brands_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.brands_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.brands_id_seq OWNER TO postgres;
+
+--
+-- Name: brands_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.brands_id_seq OWNED BY public.brands.id;
+
+
+--
+-- Name: categories; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.categories (
+    name character(50),
+    id integer NOT NULL
+);
+
+
+ALTER TABLE public.categories OWNER TO postgres;
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.categories_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.categories_id_seq OWNER TO postgres;
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
+
+
+--
+-- Name: comments; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.comments (
+    id integer NOT NULL,
+    cm_date date,
+    comment text,
+    account_id integer
+);
+
+
+ALTER TABLE public.comments OWNER TO postgres;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.comments_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comments_id_seq OWNER TO postgres;
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
+
+
+--
+-- Name: customers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.customers (
+    id integer NOT NULL,
+    name character(50),
+    gender character(7),
+    phone character(15),
+    email character(50),
+    address text,
+    account_id integer
+);
+
+
+ALTER TABLE public.customers OWNER TO postgres;
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.customers_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.customers_id_seq OWNER TO postgres;
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.customers_id_seq OWNED BY public.customers.id;
+
+
+--
+-- Name: news; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.news (
+    id integer NOT NULL,
+    up_date date,
+    content text
+);
+
+
+ALTER TABLE public.news OWNER TO postgres;
+
+--
+-- Name: news_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.news_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.news_id_seq OWNER TO postgres;
+
+--
+-- Name: news_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.news_id_seq OWNED BY public.news.id;
+
+
+--
+-- Name: products; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.products (
+    id integer NOT NULL,
+    name character(50),
+    amount integer,
+    price integer,
+    type character(10),
+    description text,
+    brand_id integer,
+    category_id integer
+);
+
+
+ALTER TABLE public.products OWNER TO postgres;
+
+--
+-- Name: products_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.products_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.products_id_seq OWNER TO postgres;
+
+--
+-- Name: products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.products_id_seq OWNED BY public.products.id;
+
+
+--
+-- Name: accounts id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.accounts ALTER COLUMN id SET DEFAULT nextval('public.accounts_id_seq'::regclass);
+
+
+--
+-- Name: brands id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.brands ALTER COLUMN id SET DEFAULT nextval('public.brands_id_seq'::regclass);
+
+
+--
+-- Name: categories id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
+
+
+--
+-- Name: comments id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.comments_id_seq'::regclass);
+
+
+--
+-- Name: customers id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.customers ALTER COLUMN id SET DEFAULT nextval('public.customers_id_seq'::regclass);
+
+
+--
+-- Name: news id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.news ALTER COLUMN id SET DEFAULT nextval('public.news_id_seq'::regclass);
+
+
+--
+-- Name: products id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products ALTER COLUMN id SET DEFAULT nextval('public.products_id_seq'::regclass);
+
+
+--
+-- Data for Name: accounts; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.accounts (id, account, password) FROM stdin;
+1	nstute0             	btznBQOrXwiK        
+2	idunwoody1          	plZ2dlbyQdCx        
+3	kandri2             	q4w61O              
+4	fickovici3          	v7GCU1a             
+5	sroycroft4          	RX35Gg0Iozj         
+6	lmccluney5          	tPZci9rfT5X         
+7	aziemsen6           	YgRYLPq7kE          
+8	ajobbins7           	LaEbt47u            
+9	enorwell8           	kqIf3LfVF           
+10	amoizer9            	PyQjHOav            
+11	asteelsa            	S9Y5FxWNEDQ         
+12	evittoreb           	E66OUVaSCr          
+13	sbernhardc          	8ZzH3hHl            
+14	ibarusd             	VMtXjg              
+15	llavisse            	C8gCdDROF           
+16	tkorousf            	y0P9Iq              
+17	sballstong          	EA00am4             
+18	cstockyh            	DPfgLcg27           
+19	hharlowi            	nz5V1H              
+20	lpessoldj           	yuuXuJJ6            
+21	alambdink           	XxsOezHtL59         
+22	jmeakel             	Ff7vXnH51gX         
+23	kpinsonm            	4aIZcPDz            
+24	obalchinn           	8SPiyifinPXc        
+25	gsarsfieldo         	jFyfTjuXKXRf        
+26	gandreyp            	zHQ2Ki              
+27	epetcheq            	o6hqKHqU            
+28	dedmondsr           	5sQiMDQe            
+29	ltodeos             	HHGkI4vLWXac        
+30	mreichhardtt        	4vi0jQ37D           
+31	gstanawayu          	zcK97iOO            
+32	mconnerryv          	8qNXe00ktxq         
+33	fblinckow           	80mNrsiYZ7e         
+34	bsabaterx           	b3nG8T              
+35	jwardelly           	BZVCE0P3Qh          
+36	yhaversz            	1jMe23jNj0GC        
+37	mbaldacchi10        	QfzlON              
+38	lpionter11          	02NSxuqrNi          
+39	jmacduffie12        	c2MIbGs             
+40	rlammerding13       	UQpjAno4wAE         
+41	kdyke14             	Wkb5WgHp            
+42	nbradbury15         	au1RyvlIhw          
+43	khandasyde16        	6iwfKtNzLxI         
+44	mbirchall17         	ElBKY5SkMvg         
+45	mgouldeby18         	edPDsA6h3           
+46	pbeldan19           	Vqi2ThqUP           
+47	adehm1a             	Uteiqw              
+48	crubin1b            	VT8SoGu             
+49	ktrehearne1c        	tiP2sIdF            
+50	mworks1d            	z6BPxBK5war         
+51	mmitkcov1e          	Jm0Sav              
+52	evicker1f           	hhloeeNu            
+53	vbritian1g          	ef62THGJUJMO        
+54	rwhether1h          	yFHO3sR8XaD         
+55	hskiggs1i           	1MaM4nOSOZT         
+56	amcmanamen1j        	x0LSalEy39x         
+57	amullaly1k          	vLlJynXvOtQ9        
+58	mflorentine1l       	AN8nKvEdj2          
+59	khrihorovich1m      	pNJ1uQ9BZM1F        
+60	dcheverell1n        	y1qhgFEv            
+61	bcarus1o            	GgeutKBz1pwh        
+62	swathell1p          	rBuRls3Sa           
+63	odjurisic1q         	ADZTnr2pLGxD        
+64	hrowthorne1r        	Y9tVlAS             
+65	pdoud1s             	GtpWSnZv            
+66	rdebenedictis1t     	YbwfOrk41           
+67	hkilleen1u          	zltLQXWvIX          
+68	pfigiovanni1v       	46J5xiT0            
+69	jnickell1w          	a1O1fbmMyb          
+70	cmerryfield1x       	BXJFWvp             
+71	eimlin1y            	ZD3TqVIBsCl5        
+72	jismirnioglou1z     	3ULLWiML            
+73	bmower20            	qeJ1GstL5at         
+74	smcboyle21          	A56sg1mUuuj         
+75	gpigne22            	yOlXjkE             
+76	mmcloughlin23       	sbvt2m              
+77	hsirl24             	UbwxfvO             
+78	fbracer25           	f8NLH9UrDriC        
+79	lceaplen26          	nRs1ttLUG           
+80	eneill27            	WfcwWz8             
+81	lpennaman28         	hzjfFmjzePI         
+82	pimlin29            	O1VvW2Is            
+83	ctomsett2a          	0sYUyQe61B2         
+84	cmccarlie2b         	coFNFhi6            
+85	wbaffin2c           	6A1KOQwyBwc         
+86	fdykas2d            	Eii7c5f8Fi          
+87	dcaplan2e           	lZWZIq              
+88	rkroll2f            	hvkvRB              
+89	ihanster2g          	tPbhpelJmICv        
+90	larbuckle2h         	2ZuIlP97L           
+91	pspincks2i          	O7ej11p             
+92	sbickerstaffe2j     	t2i63ljR5kp         
+93	hmeddemmen2k        	4sbxOdxA            
+94	mduester2l          	GNwwiedLSqCP        
+95	kweich2m            	ItjBvUiKj           
+96	cmagovern2n         	ed54RL              
+97	jaingel2o           	RLxAEYw             
+98	ckas2p              	wbwGJctRq           
+99	pbowne2q            	DgZxuL0NTwTX        
+100	gchavrin2r          	pfpoNmYHz3iM        
+\.
+
+
+--
+-- Data for Name: brands; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.brands (id, name, nation) FROM stdin;
+4	Blogpad                       	Japan                                             
+5	Jaloo                         	Poland                                            
+6	Gigashots                     	Russia                                            
+7	Demimbu                       	Democratic Republic of the Congo                  
+8	Buzzbean                      	Indonesia                                         
+9	Brainbox                      	Ukraine                                           
+10	Jaxnation                     	Indonesia                                         
+11	Dazzlesphere                  	Philippines                                       
+12	Gabtune                       	Gambia                                            
+13	Katz                          	Poland                                            
+14	Digitube                      	China                                             
+15	Flashset                      	United Kingdom                                    
+16	Mycat                         	China                                             
+17	Abata                         	Cameroon                                          
+18	Jayo                          	Russia                                            
+19	Livefish                      	Afghanistan                                       
+20	Topiczoom                     	Philippines                                       
+21	Oyoyo                         	China                                             
+22	Avavee                        	Russia                                            
+23	Dabvine                       	Indonesia                                         
+\.
+
+
+--
+-- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.categories (name, id) FROM stdin;
+toy                                               	1
+treats                                            	2
+foods                                             	3
+beds                                              	4
+litter box                                        	5
+treatment                                         	6
+bowl                                              	7
+coller                                            	8
+tools                                             	9
+\.
+
+
+--
+-- Data for Name: comments; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.comments (id, cm_date, comment, account_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: customers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.customers (id, name, gender, phone, email, address, account_id) FROM stdin;
+1	Merola Adrienne                                   	Female 	214-154-1628   	madrienne0@mit.edu                                	8 Gerald Street	1
+2	Lorena Baddam                                     	Female 	403-414-7883   	lbaddam1@ebay.com                                 	78193 Vernon Center	2
+3	Archibaldo Dabnor                                 	Male   	571-439-7129   	adabnor2@comsenz.com                              	31080 Norway Maple Park	3
+4	Noby Van der Linde                                	Male   	884-504-0475   	nvan3@behance.net                                 	346 Mitchell Hill	4
+5	Brinna Oselton                                    	Female 	642-321-4198   	boselton4@cisco.com                               	53961 Erie Drive	5
+6	Duff Drewery                                      	Male   	149-276-3474   	ddrewery5@skype.com                               	943 Troy Street	6
+7	Susanetta Withull                                 	Female 	761-794-5028   	swithull6@europa.eu                               	5717 Vera Street	7
+8	Corissa Gossling                                  	Female 	982-229-8928   	cgossling7@npr.org                                	7 Myrtle Way	8
+9	Kaila Sperrett                                    	Female 	145-964-1316   	ksperrett8@sina.com.cn                            	288 Claremont Trail	9
+10	Glynis Barneville                                 	Female 	820-227-7151   	gbarneville9@multiply.com                         	58863 Amoth Pass	10
+11	Allen Miall                                       	Male   	409-170-2128   	amialla@hostgator.com                             	572 Merchant Hill	11
+12	Adelina Daldry                                    	Female 	825-790-7255   	adaldryb@printfriendly.com                        	624 Arapahoe Parkway	12
+13	Babita Gabb                                       	Female 	445-753-2277   	bgabbc@cdbaby.com                                 	13 Warner Avenue	13
+14	Roselia Nano                                      	Female 	253-231-3121   	rnanod@google.co.jp                               	0 Weeping Birch Circle	14
+15	Griselda Salvatore                                	Female 	492-576-1072   	gsalvatoree@wp.com                                	07869 Marquette Place	15
+16	Alfy Attridge                                     	Male   	692-143-4744   	aattridgef@reference.com                          	20956 Katie Hill	16
+17	Ali Pellamont                                     	Male   	967-978-3063   	apellamontg@columbia.edu                          	355 Colorado Center	17
+18	Latia Husthwaite                                  	Female 	975-832-3475   	lhusthwaiteh@pen.io                               	44328 Stang Point	18
+19	Mellisent Gavrielli                               	Female 	683-339-7030   	mgavriellii@fc2.com                               	9066 Algoma Lane	19
+20	Lucy Rouff                                        	Female 	258-563-3842   	lrouffj@yelp.com                                  	2460 Fieldstone Avenue	20
+21	Consolata Veque                                   	Female 	674-694-3181   	cvequek@twitpic.com                               	80794 Parkside Way	21
+22	Farrah Badman                                     	Female 	956-558-7516   	fbadmanl@webmd.com                                	6 Pennsylvania Terrace	22
+23	Ranice Calverd                                    	Female 	355-991-5153   	rcalverdm@go.com                                  	9 4th Circle	23
+24	Chick Corker                                      	Male   	385-680-3674   	ccorkern@imageshack.us                            	633 Pine View Court	24
+25	Sarena Greggs                                     	Female 	788-264-6265   	sgreggso@nbcnews.com                              	742 Shoshone Junction	25
+26	Kaye Greenhead                                    	Female 	904-910-2800   	kgreenheadp@sfgate.com                            	19 Park Meadow Junction	26
+27	Darnell Burnage                                   	Male   	167-277-2022   	dburnageq@vkontakte.ru                            	4647 Hansons Park	27
+28	Edyth Kington                                     	Female 	533-493-3819   	ekingtonr@reverbnation.com                        	9663 Armistice Crossing	28
+29	Genna Shakespear                                  	Female 	583-233-3065   	gshakespears@reference.com                        	61 Annamark Road	29
+30	Cecily Haxby                                      	Female 	846-705-3408   	chaxbyt@fc2.com                                   	65 Tomscot Center	30
+31	Isa Satch                                         	Male   	104-468-4185   	isatchu@list-manage.com                           	3433 Memorial Point	31
+32	Kermit Dykas                                      	Male   	892-892-4294   	kdykasv@phpbb.com                                 	690 Hayes Street	32
+33	Maria Bulger                                      	Female 	302-294-4535   	mbulgerw@webmd.com                                	6 Pond Way	33
+34	Isa Vyse                                          	Female 	981-291-5026   	ivysex@liveinternet.ru                            	60280 Calypso Circle	34
+35	Camey Woodlands                                   	Male   	885-238-9677   	cwoodlandsy@prlog.org                             	0415 Commercial Hill	35
+36	Grace Oxenbury                                    	Female 	242-734-7773   	goxenburyz@wikispaces.com                         	14 Melody Terrace	36
+37	Opal Palethorpe                                   	Female 	715-454-4348   	opalethorpe10@about.com                           	61346 Fordem Avenue	37
+38	Jone Worsalls                                     	Male   	819-799-8029   	jworsalls11@bluehost.com                          	3357 Prentice Way	38
+39	Claresta Ruprechter                               	Female 	652-143-2719   	cruprechter12@utexas.edu                          	4906 Maple Wood Drive	39
+40	Lindy Maulkin                                     	Female 	730-178-5689   	lmaulkin13@digg.com                               	081 Buena Vista Avenue	40
+41	Ludovika Minithorpe                               	Female 	909-196-1540   	lminithorpe14@cloudflare.com                      	29 High Crossing Crossing	41
+42	Jerrome Huddy                                     	Male   	729-114-8772   	jhuddy15@kickstarter.com                          	924 Corry Court	42
+43	Dermot Temporal                                   	Male   	511-466-3109   	dtemporal16@mac.com                               	6 3rd Way	43
+44	Cristen Proschke                                  	Female 	930-289-7942   	cproschke17@netscape.com                          	8 8th Pass	44
+45	Irvine Tinto                                      	Male   	221-264-7637   	itinto18@patch.com                                	48413 Barnett Way	45
+46	Paxon Minards                                     	Male   	297-359-3152   	pminards19@nature.com                             	983 Homewood Center	46
+47	Reece Courtois                                    	Male   	538-385-8246   	rcourtois1a@wisc.edu                              	46864 Lunder Road	47
+48	Laryssa Sarah                                     	Female 	344-920-9338   	lsarah1b@flickr.com                               	16822 Stuart Plaza	48
+49	Godwin Sinnie                                     	Male   	413-256-4210   	gsinnie1c@ifeng.com                               	864 Crest Line Pass	49
+50	Arnold Aers                                       	Male   	223-810-0248   	aaers1d@quantcast.com                             	79 Mendota Circle	50
+51	Rivkah Rissom                                     	Female 	445-509-1464   	rrissom1e@ycombinator.com                         	1969 Thierer Drive	51
+52	Rosy Spaughton                                    	Female 	343-835-8383   	rspaughton1f@geocities.com                        	7 Loomis Alley	52
+53	Hyatt Di Matteo                                   	Male   	935-119-5083   	hdi1g@google.cn                                   	8663 Muir Place	53
+54	Jeana Coupland                                    	Female 	567-319-3421   	jcoupland1h@redcross.org                          	689 Delaware Pass	54
+55	Aurea Golley                                      	Female 	817-747-9998   	agolley1i@digg.com                                	75849 Sage Parkway	55
+56	Sena Lysons                                       	Female 	281-911-2907   	slysons1j@bloglovin.com                           	3 2nd Plaza	56
+57	Skell Montilla                                    	Male   	784-207-6093   	smontilla1k@blinklist.com                         	9096 Monterey Park	57
+58	Felizio Peyro                                     	Male   	919-264-9538   	fpeyro1l@netlog.com                               	1 Goodland Crossing	58
+59	Jae Gorusso                                       	Male   	987-527-3968   	jgorusso1m@linkedin.com                           	00 Montana Pass	59
+60	Nertie Cantu                                      	Female 	710-253-5145   	ncantu1n@odnoklassniki.ru                         	44344 Becker Parkway	60
+61	Egon Jurs                                         	Male   	810-329-2364   	ejurs1o@who.int                                   	1 Waywood Road	61
+62	Petrina Loving                                    	Female 	833-509-3447   	ploving1p@ow.ly                                   	4949 Oneill Lane	62
+63	Nani Kincaid                                      	Female 	421-483-7921   	nkincaid1q@smugmug.com                            	1 Mosinee Road	63
+64	Minne Basire                                      	Female 	637-632-3950   	mbasire1r@umn.edu                                 	502 Crest Line Junction	64
+65	Davon Mignot                                      	Male   	657-274-9279   	dmignot1s@salon.com                               	4108 Johnson Hill	65
+66	Lorraine Robak                                    	Female 	905-117-9629   	lrobak1t@apache.org                               	7 Schurz Place	66
+67	Rebeka Stanhope                                   	Female 	808-891-1631   	rstanhope1u@lycos.com                             	7603 Crowley Parkway	67
+68	Addie Lohan                                       	Female 	957-281-9310   	alohan1v@europa.eu                                	6067 Messerschmidt Center	68
+69	Ardis Teece                                       	Female 	407-598-1544   	ateece1w@mysql.com                                	0740 Mitchell Parkway	69
+70	Yul Joddens                                       	Male   	775-176-3563   	yjoddens1x@answers.com                            	712 Farwell Center	70
+71	Uriel Nardoni                                     	Male   	691-867-0490   	unardoni1y@narod.ru                               	0035 Gateway Way	71
+72	Lisa Salvatore                                    	Female 	967-706-2127   	lsalvatore1z@t-online.de                          	1067 Shasta Point	72
+73	Angel Crisell                                     	Female 	293-232-4100   	acrisell20@facebook.com                           	789 Service Way	73
+74	Romeo O'Deoran                                    	Male   	458-361-7782   	rodeoran21@people.com.cn                          	08 Leroy Street	74
+75	Celestyn Shotter                                  	Female 	981-615-9042   	cshotter22@nydailynews.com                        	30 Becker Parkway	75
+76	Mohandas Yosifov                                  	Male   	843-900-8063   	myosifov23@cpanel.net                             	94 Walton Way	76
+77	Shanta Hancock                                    	Female 	209-821-8894   	shancock24@dion.ne.jp                             	198 Anniversary Junction	77
+78	Martelle Kneesha                                  	Female 	130-224-7288   	mkneesha25@bandcamp.com                           	816 Kim Hill	78
+79	Jay Critch                                        	Male   	522-121-6611   	jcritch26@senate.gov                              	324 Merchant Junction	79
+80	Vladimir Ruffell                                  	Male   	576-442-5423   	vruffell27@hp.com                                 	24521 David Avenue	80
+81	Kennan Patience                                   	Male   	786-629-3937   	kpatience28@utexas.edu                            	0138 Petterle Parkway	81
+82	Zack Ionnidis                                     	Male   	768-142-0616   	zionnidis29@drupal.org                            	9755 Ryan Point	82
+83	Rorke Isakov                                      	Male   	624-880-1555   	risakov2a@xinhuanet.com                           	97787 Kedzie Parkway	83
+84	Ike Hatto                                         	Male   	275-950-8613   	ihatto2b@oakley.com                               	6590 Florence Junction	84
+85	Hershel Marchelli                                 	Male   	479-777-0079   	hmarchelli2c@bravesites.com                       	35767 Loftsgordon Alley	85
+86	Janos Seyfart                                     	Male   	992-249-7573   	jseyfart2d@ucoz.com                               	71536 Village Way	86
+87	Brenda Avann                                      	Female 	875-340-5559   	bavann2e@mapquest.com                             	1636 Haas Avenue	87
+88	Sarajane Killiner                                 	Female 	648-831-7068   	skilliner2f@whitehouse.gov                        	36083 Browning Park	88
+89	Zaria McGeoch                                     	Female 	683-760-5906   	zmcgeoch2g@canalblog.com                          	1219 Toban Pass	89
+90	Iain Lunbech                                      	Male   	897-178-2979   	ilunbech2h@cloudflare.com                         	5116 Sundown Alley	90
+91	Wilhelm Belfit                                    	Male   	683-611-9967   	wbelfit2i@lycos.com                               	22937 Hagan Trail	91
+92	Ev Grenville                                      	Male   	954-956-3690   	egrenville2j@etsy.com                             	07 Hanson Pass	92
+93	Ellery Gunter                                     	Male   	574-505-1183   	egunter2k@booking.com                             	965 Pennsylvania Lane	93
+94	Lyssa Menco                                       	Female 	705-368-7419   	lmenco2l@opensource.org                           	73 Elka Lane	94
+95	Kynthia Oselton                                   	Female 	488-495-7845   	koselton2m@technorati.com                         	151 Sommers Parkway	95
+96	Paulita Kroch                                     	Female 	752-494-7378   	pkroch2n@squidoo.com                              	9 Almo Terrace	96
+97	Joana Kenninghan                                  	Female 	936-367-4982   	jkenninghan2o@amazon.com                          	85730 Manley Pass	97
+98	Cornelius Wooffinden                              	Male   	964-783-0088   	cwooffinden2p@naver.com                           	946 Granby Place	98
+99	Lon Blackman                                      	Male   	722-546-8980   	lblackman2q@jugem.jp                              	529 Ludington Street	99
+100	Avie Jealous                                      	Female 	838-439-8926   	ajealous2r@sfgate.com                             	8285 Sunfield Center	100
+\.
+
+
+--
+-- Data for Name: news; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.news (id, up_date, content) FROM stdin;
+\.
+
+
+--
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.products (id, name, amount, price, type, description, brand_id, category_id) FROM stdin;
+1	Keylex                                            	187	138836	false     	Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.\n\nNam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.\n\nCurabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.	16	3
+2	Ronstring                                         	182	110190	true      	Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.\n\nDonec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.	6	3
+3	Flexidy                                           	154	47651	false     	Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.	6	8
+4	Voyatouch                                         	20	67311	true      	Sed ante. Vivamus tortor. Duis mattis egestas metus.\n\nAenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.	15	4
+5	Matsoft                                           	166	373038	false     	Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.\n\nMaecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\n\nCurabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.	14	8
+6	Transcof                                          	79	78031	true      	Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.	7	2
+7	Prodder                                           	63	41598	false     	Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.	7	6
+8	Wrapsafe                                          	105	398944	true      	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.\n\nVestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.\n\nDuis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.	5	1
+9	Y-find                                            	121	411779	false     	Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.	15	1
+10	Rank                                              	140	324008	true      	Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.\n\nDuis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.\n\nMauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.	15	8
+11	Bigtax                                            	170	341620	false     	Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.	6	4
+12	Tres-Zap                                          	144	468731	false     	Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.	5	6
+13	Otcom                                             	36	492858	false     	Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.\n\nPhasellus in felis. Donec semper sapien a libero. Nam dui.	11	4
+14	Voyatouch                                         	123	400316	false     	Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.\n\nDuis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.	10	4
+15	Voyatouch                                         	35	216192	false     	Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.\n\nIn quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.	21	6
+16	Latlux                                            	15	393734	false     	Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.\n\nCurabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.	6	3
+17	Domainer                                          	86	255770	false     	In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.\n\nSuspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.\n\nMaecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.	8	3
+18	Alphazap                                          	182	274857	true      	Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.	21	3
+109	Alpha                                             	185	459796	false     	Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.	14	6
+19	Bitchip                                           	117	461793	true      	In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.	12	1
+20	Otcom                                             	1	375277	true      	In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.	23	6
+21	Rank                                              	55	437592	true      	Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.	14	8
+22	Otcom                                             	76	78208	true      	Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.	6	8
+23	Veribet                                           	34	163529	false     	Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.	18	8
+24	Cookley                                           	32	404359	true      	In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.\n\nSuspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.	10	3
+25	Tin                                               	37	86917	true      	Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.\n\nMauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.\n\nNullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.	20	3
+26	Sonsing                                           	194	62214	false     	Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.\n\nIn sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.	22	4
+27	Home Ing                                          	178	196418	false     	Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.	22	5
+28	Lotlux                                            	62	222496	false     	Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.	4	4
+29	Konklux                                           	192	496781	true      	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.\n\nVestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.\n\nDuis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.	21	7
+30	Vagram                                            	146	315543	false     	Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.	22	6
+31	Asoka                                             	33	164246	true      	Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.	11	5
+32	Rank                                              	105	146324	false     	Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.	23	3
+33	Hatity                                            	160	39170	true      	Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.	6	5
+34	Y-find                                            	200	54677	true      	In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.	16	5
+35	Rank                                              	39	124975	true      	Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.	7	5
+36	Tin                                               	111	321125	false     	Phasellus in felis. Donec semper sapien a libero. Nam dui.	16	5
+37	Cardify                                           	136	153425	false     	Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.	23	3
+38	Biodex                                            	160	148154	false     	Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.\n\nVestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.	4	4
+39	Temp                                              	190	201263	true      	Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.\n\nPraesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.\n\nMorbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.	14	8
+40	Y-find                                            	42	85376	true      	Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.	17	3
+41	Fixflex                                           	118	467448	true      	Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.	11	1
+42	Regrant                                           	143	468409	true      	Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.	23	3
+110	Treeflex                                          	61	268843	true      	In congue. Etiam justo. Etiam pretium iaculis justo.	10	4
+43	Trippledex                                        	122	268193	false     	In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\n\nMaecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.	17	6
+44	Fixflex                                           	45	288823	true      	Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.\n\nCurabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.	4	4
+45	Alpha                                             	160	388627	false     	Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.\n\nIn congue. Etiam justo. Etiam pretium iaculis justo.	11	8
+46	Veribet                                           	8	452432	true      	Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.	8	4
+47	Latlux                                            	177	366670	false     	Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.	23	8
+48	Otcom                                             	138	309438	true      	Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.\n\nPraesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.	21	9
+49	Alpha                                             	197	229962	true      	Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.	19	4
+50	Opela                                             	96	214993	true      	Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.	4	1
+51	Vagram                                            	109	277271	false     	Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.\n\nIn congue. Etiam justo. Etiam pretium iaculis justo.	12	2
+52	Zaam-Dox                                          	58	109760	false     	Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.\n\nCras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.	23	9
+53	Y-find                                            	35	440487	true      	Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.	16	2
+54	Redhold                                           	47	257334	true      	Sed ante. Vivamus tortor. Duis mattis egestas metus.\n\nAenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.	13	2
+55	Prodder                                           	30	354790	false     	In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.	16	3
+56	Stronghold                                        	44	58529	false     	Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.	23	5
+57	Fixflex                                           	30	329361	false     	Phasellus in felis. Donec semper sapien a libero. Nam dui.	18	3
+58	Cookley                                           	187	309767	true      	In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.	5	8
+59	Viva                                              	90	53195	false     	Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.	8	9
+60	Bigtax                                            	138	332646	false     	Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.	13	3
+61	Fintone                                           	3	53687	true      	Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.\n\nMorbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.	15	5
+62	Voltsillam                                        	93	486355	false     	In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.	14	2
+63	Holdlamis                                         	22	395028	false     	Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.	10	8
+64	Domainer                                          	134	408943	true      	Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.\n\nPraesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.\n\nMorbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.	14	2
+65	Tempsoft                                          	183	447780	true      	In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.\n\nSuspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.	15	2
+66	Zamit                                             	31	43765	true      	Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.	18	6
+67	Domainer                                          	77	353818	true      	Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.	8	6
+68	Konklab                                           	36	279413	true      	Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.	16	5
+69	Daltfresh                                         	127	380753	false     	Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\n\nCurabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.	17	7
+70	Otcom                                             	6	469652	false     	Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.	5	2
+71	Sonair                                            	95	376597	true      	Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.	9	7
+72	Gembucket                                         	186	148640	true      	Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.	10	3
+73	Konklux                                           	87	481822	true      	Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.	12	2
+74	Asoka                                             	86	253582	false     	Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.\n\nProin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.\n\nDuis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.	13	2
+75	Bytecard                                          	197	408831	true      	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.\n\nVestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.\n\nDuis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.	4	1
+76	Domainer                                          	145	85160	false     	Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.\n\nMauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.	4	1
+77	Voltsillam                                        	179	268142	true      	Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.\n\nPhasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.\n\nProin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.	14	1
+78	Home Ing                                          	197	290304	true      	Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.\n\nPhasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.	10	3
+79	Tempsoft                                          	175	74970	false     	Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.	13	3
+80	Opela                                             	30	368845	false     	Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.	5	5
+81	Treeflex                                          	190	45466	true      	Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.	10	9
+82	Bytecard                                          	95	414056	false     	Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.\n\nDuis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.	10	6
+83	Veribet                                           	135	378133	false     	Fusce consequat. Nulla nisl. Nunc nisl.	15	6
+84	Span                                              	197	215036	true      	Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.\n\nNullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.	6	2
+85	Zoolab                                            	155	252504	true      	In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.	19	8
+86	Tempsoft                                          	197	162976	false     	Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.	16	8
+87	Tresom                                            	191	141408	true      	Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.	7	3
+152	Overhold                                          	130	493350	true      	Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.	17	8
+88	Otcom                                             	3	128184	false     	Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.\n\nAenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.	15	9
+89	Stim                                              	1	493255	true      	Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.	7	3
+90	Zamit                                             	6	268439	false     	Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.\n\nPraesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.	5	7
+91	Tres-Zap                                          	129	375272	true      	Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.	20	2
+92	Tin                                               	196	262010	false     	Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.	9	5
+93	Aerified                                          	194	468010	false     	Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.	20	5
+94	Daltfresh                                         	163	418579	true      	Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.	16	3
+95	Tampflex                                          	97	38913	true      	Sed ante. Vivamus tortor. Duis mattis egestas metus.\n\nAenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.	7	7
+96	Tin                                               	65	276610	true      	Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.	20	2
+97	Regrant                                           	171	157510	true      	In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\n\nMaecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.	4	1
+98	Asoka                                             	6	438434	true      	Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.	6	1
+99	Opela                                             	98	141554	false     	Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.	4	4
+100	Wrapsafe                                          	30	382386	false     	Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.\n\nPraesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.	23	3
+101	Zoolab                                            	104	119145	false     	Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.\n\nNam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.\n\nCurabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.	8	1
+102	Transcof                                          	93	459245	false     	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.\n\nVestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.	6	2
+103	Sonair                                            	5	417519	true      	Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.	22	8
+104	Greenlam                                          	150	491082	true      	Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.	23	7
+105	Tampflex                                          	173	352529	true      	Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.\n\nDonec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.	22	9
+106	Wrapsafe                                          	14	30620	false     	Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.	14	1
+107	Flexidy                                           	105	52984	false     	Sed ante. Vivamus tortor. Duis mattis egestas metus.	11	5
+108	Zathin                                            	5	389708	true      	Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.	8	4
+111	Wrapsafe                                          	104	395756	false     	Phasellus in felis. Donec semper sapien a libero. Nam dui.\n\nProin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.\n\nInteger ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.	4	4
+112	Y-find                                            	147	167517	true      	Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.\n\nProin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.	4	8
+113	Viva                                              	8	409943	true      	Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.\n\nInteger ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.\n\nNam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.	10	1
+114	Sonair                                            	90	93968	true      	Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.\n\nInteger ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.\n\nNam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.	10	1
+115	Otcom                                             	157	418796	false     	Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.	6	1
+116	Pannier                                           	123	195320	false     	Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.	18	5
+117	Fintone                                           	102	300388	true      	Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.\n\nDuis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.	9	7
+118	Prodder                                           	191	64723	true      	Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.\n\nInteger tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.	7	4
+119	Viva                                              	168	394412	true      	Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\n\nCurabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.\n\nInteger tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.	20	4
+120	Redhold                                           	7	134860	true      	Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.	16	5
+121	Alpha                                             	22	91839	false     	Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.\n\nCras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.	21	1
+122	Toughjoyfax                                       	38	49664	false     	Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.\n\nFusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.	16	3
+123	Biodex                                            	133	84498	true      	Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.\n\nPraesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.	16	1
+124	Transcof                                          	42	432689	false     	Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.\n\nMaecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.	16	4
+125	Bytecard                                          	2	209745	true      	Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.\n\nDonec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.\n\nDuis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.	7	6
+126	Hatity                                            	19	329293	true      	Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.	6	7
+127	Bigtax                                            	173	198225	false     	In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.	4	4
+128	Fintone                                           	159	66243	false     	Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.\n\nPraesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.	12	6
+129	Konklab                                           	172	345928	false     	Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.	4	5
+130	Otcom                                             	152	456171	false     	Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\n\nMaecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.	23	2
+131	Quo Lux                                           	99	93689	false     	Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.\n\nVestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.	18	9
+132	Lotlux                                            	100	90117	true      	Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.	23	5
+133	Prodder                                           	188	335398	false     	In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\n\nMaecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.	10	8
+134	Ronstring                                         	168	137699	false     	Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nEtiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.	17	1
+135	Y-find                                            	21	428475	false     	Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.\n\nIn quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.	14	7
+136	Latlux                                            	161	418579	false     	Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.	20	8
+137	Viva                                              	45	154542	false     	Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.\n\nCum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.	9	7
+138	Zathin                                            	38	309621	false     	Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.	13	5
+139	Sub-Ex                                            	197	362166	false     	Sed ante. Vivamus tortor. Duis mattis egestas metus.	10	4
+140	Stringtough                                       	38	201871	true      	Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.\n\nDuis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.\n\nIn sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.	19	3
+141	Bigtax                                            	8	317456	true      	Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.\n\nMaecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\n\nCurabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.	8	3
+142	Lotstring                                         	77	480721	true      	Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh.\n\nIn quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.	7	2
+143	Alpha                                             	88	374868	true      	In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.	5	8
+144	Bamity                                            	163	161853	true      	Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.	6	4
+145	Zoolab                                            	5	333806	true      	Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.	5	5
+146	Pannier                                           	197	62607	false     	Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.\n\nPraesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.	23	7
+147	Lotlux                                            	136	452805	false     	Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.\n\nDuis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.	23	5
+148	Ventosanzap                                       	22	329261	false     	Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.	8	9
+149	Lotstring                                         	6	458335	true      	In congue. Etiam justo. Etiam pretium iaculis justo.	7	5
+150	Flexidy                                           	53	197481	false     	Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.	10	3
+151	Tampflex                                          	96	365265	true      	Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.\n\nInteger tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.\n\nPraesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.	11	5
+153	Voltsillam                                        	156	193043	true      	Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.	4	1
+154	Regrant                                           	155	75182	false     	Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.	4	9
+155	Sonair                                            	103	470201	false     	Phasellus in felis. Donec semper sapien a libero. Nam dui.\n\nProin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.\n\nInteger ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.	16	8
+156	Zamit                                             	59	150546	false     	Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.	12	7
+157	Zontrax                                           	24	254326	false     	Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.	17	5
+158	Stringtough                                       	164	38670	false     	Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.	4	8
+159	Asoka                                             	113	260602	false     	Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.\n\nCurabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.	10	1
+160	Trippledex                                        	36	369535	true      	Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.\n\nPhasellus in felis. Donec semper sapien a libero. Nam dui.\n\nProin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.	23	5
+161	Job                                               	126	328210	false     	Sed ante. Vivamus tortor. Duis mattis egestas metus.\n\nAenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.	7	1
+162	Cardify                                           	157	33657	true      	Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.\n\nPhasellus in felis. Donec semper sapien a libero. Nam dui.	6	2
+163	Konklab                                           	67	363870	true      	Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.	21	2
+164	Wrapsafe                                          	78	178998	true      	Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.\n\nInteger tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.\n\nPraesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.	8	2
+165	Bigtax                                            	134	363044	true      	Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.	19	4
+166	Treeflex                                          	72	340576	false     	Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.	14	2
+167	Y-find                                            	107	372596	true      	Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.	5	1
+168	Zathin                                            	190	292192	false     	Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.\n\nDuis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.\n\nDonec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.	9	1
+169	Bamity                                            	35	113854	true      	Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.	17	4
+170	Greenlam                                          	135	478480	false     	Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.\n\nPraesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.\n\nMorbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.	17	3
+171	Redhold                                           	67	143584	true      	Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.	9	4
+172	Stronghold                                        	180	143001	false     	Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\n\nCurabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.\n\nInteger tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.	20	7
+173	Y-Solowarm                                        	162	39297	false     	Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.	19	4
+174	Wrapsafe                                          	105	74127	false     	Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.	11	8
+175	Vagram                                            	133	240406	true      	Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.	4	2
+176	Zathin                                            	69	297616	false     	Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.	13	6
+177	Andalax                                           	39	197719	true      	Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.	22	7
+178	Zontrax                                           	123	361834	true      	Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.\n\nPhasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.	23	4
+179	Ronstring                                         	175	301870	true      	Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.	6	9
+180	Fix San                                           	2	104185	false     	In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.	22	3
+181	Cardguard                                         	77	94257	false     	Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.	16	1
+182	Fintone                                           	167	80699	true      	Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.	19	5
+183	Daltfresh                                         	182	278047	false     	Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.	4	3
+184	Voyatouch                                         	161	200041	true      	Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.	7	6
+185	Job                                               	45	380138	true      	Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.\n\nIn congue. Etiam justo. Etiam pretium iaculis justo.	17	2
+186	Konklab                                           	50	487028	true      	In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.\n\nSuspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.\n\nMaecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.	9	2
+187	Flowdesk                                          	73	371454	false     	Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.\n\nMaecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.\n\nCurabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.	10	4
+188	Trippledex                                        	151	444078	false     	Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.\n\nAenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.	19	5
+189	Zaam-Dox                                          	123	198104	false     	Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.	8	5
+190	Namfix                                            	163	208727	false     	In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.\n\nNulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi.	20	2
+191	Bigtax                                            	175	421137	false     	Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.	7	8
+192	Overhold                                          	26	350069	true      	Sed ante. Vivamus tortor. Duis mattis egestas metus.\n\nAenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.	15	2
+193	Transcof                                          	174	170725	true      	In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.	15	5
+194	Konklab                                           	111	97590	false     	Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.	5	9
+195	Cardguard                                         	191	149916	true      	In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.	13	6
+196	Bamity                                            	115	181506	false     	Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.\n\nVestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.	4	7
+197	Fintone                                           	58	437525	true      	In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.	10	5
+198	Biodex                                            	50	159001	true      	Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.\n\nNam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.	15	2
+199	Ronstring                                         	34	485011	false     	Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.\n\nMorbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.	12	1
+200	Pannier                                           	82	427133	false     	Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.\n\nPhasellus in felis. Donec semper sapien a libero. Nam dui.\n\nProin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.	16	3
+\.
+
+
+--
+-- Name: accounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.accounts_id_seq', 100, true);
+
+
+--
+-- Name: brands_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.brands_id_seq', 23, true);
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.categories_id_seq', 9, true);
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.comments_id_seq', 1, false);
+
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.customers_id_seq', 100, true);
+
+
+--
+-- Name: news_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.news_id_seq', 1, false);
+
+
+--
+-- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.products_id_seq', 200, true);
+
+
+--
+-- Name: accounts accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.accounts
+    ADD CONSTRAINT accounts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: brands brands_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.brands
+    ADD CONSTRAINT brands_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: customers customers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.customers
+    ADD CONSTRAINT customers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: news news_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.news
+    ADD CONSTRAINT news_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
